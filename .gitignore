@@ -1,0 +1,4 @@
+# Stato di lavoro delle skill (piano, ordini, watchlist, config personale)
+trader/
+__pycache__/
+*.pyc
