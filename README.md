@@ -6,7 +6,7 @@ Progetto con le 11 skill di day trading di
 installate in `.claude/skills/`. Aprendo questo progetto con Claude Code le skill sono
 disponibili come comandi `/trader-…`.
 
-## Le skill
+## Le skill day-trader
 
 | Comando | A cosa serve |
 | --- | --- |
@@ -25,9 +25,39 @@ disponibili come comandi `/trader-…`.
 Flusso di un trade: scanner → news → entry → exit → timemachine → budget → risk → broker,
 poi alerts mentre la posizione è aperta. Tutto viene salvato in `trader/` (escluso da git).
 
+## Skill ufficiali Alpaca (conto di prova)
+
+Da [alpacahq/alpaca-skills](https://github.com/alpacahq/alpaca-skills) (commit `0e7c351`, Apache 2.0:
+`.claude/skills/LICENSE-alpaca-skills`). Solo istruzioni, nessun codice.
+
+| Skill | A cosa serve |
+| --- | --- |
+| `alpaca-trading-paper-trading` | Ordini sul conto paper via API REST o SDK |
+| `alpaca-trading-paper-trading-mcp` | Ordini sul conto paper via server MCP di Alpaca |
+| `alpaca-trading-paper-trading-cli` | Ordini sul conto paper via Alpaca CLI |
+| `alpaca-trading-backtest` | Backtest storici riproducibili con Alpaca CLI |
+
+## Skill tradermonty (selezione senza API a pagamento)
+
+Da [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills)
+(commit `a627d17`, MIT: `.claude/skills/LICENSE-claude-trading-skills`). Richiedono
+`pip install -r requirements.txt`. I percorsi `skills/...` nelle istruzioni sono stati
+riscritti in `.claude/skills/...`.
+
+| Area | Skill |
+| --- | --- |
+| Rischio e disciplina | `position-sizer`, `futures-position-sizer`, `pre-trade-discipline-gate`, `drawdown-circuit-breaker`, `contrarian-setup-gate` |
+| Piani di trade | `breakout-trade-planner` (ordini bracket compatibili Alpaca) |
+| Diario e revisione | `trader-memory-core`, `signal-postmortem`, `trade-performance-coach`, `weekly-performance-digest` |
+| Contesto di mercato | `market-breadth-analyzer`, `uptrend-analyzer`, `macro-regime-detector`, `exposure-coach`, `market-news-analyst`, `technical-analyst` |
+| Portafoglio e strategie | `portfolio-manager` (legge le posizioni da Alpaca), `backtest-expert` |
+
+Alcune funzioni opzionali di `exposure-coach` usano dati di skill non installate
+(theme-detector, institutional-flow-tracker con chiave FMP).
+
 ## Configurazione
 
-- Python 3.8+, nessuna dipendenza da installare.
+- Python 3.11+. Le skill day-trader non hanno dipendenze; per le skill tradermonty: `pip install -r requirements.txt`.
 - Per le skill che usano la SEC (`trader-news`, `trader-analyst`) imposta un'identificazione,
   ad esempio `export SEC_USER_AGENT="Nome Cognome tua@email"`, oppure
   `"sec_user_agent"` in `trader/config.json`.
